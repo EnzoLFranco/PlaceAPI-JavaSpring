@@ -18,4 +18,10 @@ public class PlaceController {
         this.placeService = placeService;
     }
 
+    @PostMapping
+    public ResponseEntity<Mono<Place>> create(Place place) {
+        var createdPlace = placeService.create(place);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPlace);
+    }
+
 }
