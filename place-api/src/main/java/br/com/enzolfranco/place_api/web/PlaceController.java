@@ -1,10 +1,13 @@
 package br.com.enzolfranco.place_api.web;
 
+import br.com.enzolfranco.place_api.api.PlaceRequest;
+import br.com.enzolfranco.place_api.api.PlaceResponse;
 import br.com.enzolfranco.place_api.domain.Place;
 import br.com.enzolfranco.place_api.domain.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -19,9 +22,9 @@ public class PlaceController {
     }
 
     @PostMapping
-    public ResponseEntity<Mono<Place>> create(Place place) {
-        var createdPlace = placeService.create(place);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPlace);
+    public ResponseEntity<Mono<PlaceResponse>> create(@RequestBody PlaceRequest request) {
+        var placeResponse = placeService.create(request).map(PlaceMapper::fromPlaceToResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(placeResponse);
     }
 
 }
