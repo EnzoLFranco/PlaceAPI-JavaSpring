@@ -1,4 +1,21 @@
 package br.com.enzolfranco.place_api.web;
 
+import br.com.enzolfranco.place_api.domain.Place;
+import br.com.enzolfranco.place_api.domain.PlaceService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+
+@RestController
+@RequestMapping("/places")
 public class PlaceController {
+    private PlaceService placeService;
+
+    public PlaceController(PlaceService placeService) {
+        this.placeService = placeService;
+    }
+
 }
