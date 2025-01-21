@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.time.LocalDateTime;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PlaceApiApplicationTests {
@@ -56,4 +57,24 @@ class PlaceApiApplicationTests {
 				.expectBody()
 				.jsonPath("$").isArray();
 	}
+
+	@Test
+	public void testUpdateSucess(){
+		var id = 1;
+		var updatedName = "New name";
+		var updatedState = "New state";
+
+		webTestClient
+				.put()
+				.uri("/places/{id}", id)
+				.bodyValue(new PlaceRequest(updatedName, updatedState))
+				.exchange()
+				.expectStatus().isOk()
+				.expectBody()
+				.jsonPath("id").isEqualTo(id)
+				.jsonPath("name").isEqualTo(updatedName)
+				.jsonPath("state").isEqualTo(updatedState)
+				.jsonPath("updatedAt").isEqualTo(LocalDateTime.now());
+	}
+
 }
