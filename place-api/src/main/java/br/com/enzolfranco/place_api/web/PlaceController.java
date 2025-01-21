@@ -31,4 +31,11 @@ public class PlaceController {
         return placeService.list();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Mono<PlaceResponse>> update(@PathVariable Long id,@RequestBody PlaceRequest request){
+        var placeResponse = placeService.updateById(id, request).map(PlaceMapper::fromPlaceToResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(placeResponse);
+    }
+
+
 }
