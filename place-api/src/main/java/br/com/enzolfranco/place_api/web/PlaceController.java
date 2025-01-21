@@ -43,4 +43,10 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.OK).body(placeResponse);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Mono<PlaceResponse>> findById(@PathVariable Long id){
+        var placeResponse = placeService.findById(id).map(PlaceMapper::fromPlaceToResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(placeResponse);
+    }
+
 }
