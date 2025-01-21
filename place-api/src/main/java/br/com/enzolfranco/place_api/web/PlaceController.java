@@ -37,5 +37,10 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.OK).body(placeResponse);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Mono<PlaceResponse>> deleteById(@PathVariable Long id){
+        var placeResponse = placeService.deleteById(id).map(PlaceMapper::fromPlaceToResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(placeResponse);
+    }
 
 }
