@@ -77,4 +77,20 @@ class PlaceApiApplicationTests {
 				.jsonPath("updatedAt").isEqualTo(LocalDateTime.now());
 	}
 
+	@Test
+	public void testUpdateFailure(){
+		var id = 999;
+		var updatedName = "New name";
+		var updatedState = "New state";
+
+		webTestClient
+				.put()
+				.uri("/places/{id}", id)
+				.bodyValue(new PlaceRequest(updatedName, updatedState))
+				.exchange()
+				.expectStatus().isNotFound()
+				.expectBody()
+				.jsonPath("message").isEqualTo("Place not found");
+	}
+
 }
