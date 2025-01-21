@@ -51,4 +51,9 @@ public class PlaceService {
                 .switchIfEmpty(Mono.error(new RuntimeException("Place not found")));
     }
 
+    public Mono<Place> findById(Long id){
+        return placeRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Place not found")));
+    }
+
 }
