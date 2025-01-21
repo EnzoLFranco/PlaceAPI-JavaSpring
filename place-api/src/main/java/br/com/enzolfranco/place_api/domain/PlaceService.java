@@ -2,7 +2,9 @@ package br.com.enzolfranco.place_api.domain;
 
 import br.com.enzolfranco.place_api.api.PlaceRequest;
 import com.github.slugify.Slugify;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 
 public class PlaceService {
     private PlaceRepository placeRepository;
@@ -18,4 +20,10 @@ public class PlaceService {
                 null, null);
         return placeRepository.save(place);
     }
+
+    public Flux<Place> list(){
+        return placeRepository.findAll();
+    }
+
+
 }
