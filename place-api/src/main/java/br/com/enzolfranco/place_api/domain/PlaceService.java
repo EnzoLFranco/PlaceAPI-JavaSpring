@@ -5,6 +5,8 @@ import com.github.slugify.Slugify;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+
 
 public class PlaceService {
     private PlaceRepository placeRepository;
@@ -23,6 +25,21 @@ public class PlaceService {
 
     public Flux<Place> list(){
         return placeRepository.findAll();
+    }
+
+    public Mono<Place> updateById(Long id, PlaceRequest placeRequest){
+        return placeRepository.findById(id).flatMap(existingPlace ->{
+                var updatedPlace = new Place(
+                        existingPlace.id(),
+                        placeRequest.name(),
+                        placeRequest.state(),
+                        slg.slugify(placeRequest.name()),
+                        existingPlace.createdAt(),
+                        LocalDateTime.now()
+                );
+            return placeRepository.save(updatedPlace);
+        })
+                .switchIfEmpty(Mono.error(new RuntimeException("Place not found")));
     }
 
 
