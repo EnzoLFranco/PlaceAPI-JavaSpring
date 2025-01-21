@@ -2,12 +2,13 @@ package br.com.enzolfranco.place_api.domain;
 
 import br.com.enzolfranco.place_api.api.PlaceRequest;
 import com.github.slugify.Slugify;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
-
+@Service
 public class PlaceService {
     private PlaceRepository placeRepository;
     public Slugify slg;
@@ -42,5 +43,12 @@ public class PlaceService {
                 .switchIfEmpty(Mono.error(new RuntimeException("Place not found")));
     }
 
+    public Mono<Place> deleteById(Long id){
+        return placeRepository.findById(id).flatMap(existingPlace ->
+            placeRepository.deleteById(id).
+                thenReturn(existingPlace)
+        )
+                .switchIfEmpty(Mono.error(new RuntimeException("Place not found")));
+    }
 
 }
