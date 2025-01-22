@@ -62,6 +62,7 @@ class PlaceApiApplicationTests {
 	public void testUpdateSucess(){
 		var id = 1;
 		var updatedName = "New name";
+		var updatedSlug = "new-name";
 		var updatedState = "New state";
 
 		webTestClient
@@ -71,8 +72,8 @@ class PlaceApiApplicationTests {
 				.exchange()
 				.expectStatus().isOk()
 				.expectBody()
-				.jsonPath("id").isEqualTo(id)
 				.jsonPath("name").isEqualTo(updatedName)
+				.jsonPath("slug").isEqualTo(updatedSlug)
 				.jsonPath("state").isEqualTo(updatedState)
 				.jsonPath("updatedAt").isEqualTo(LocalDateTime.now());
 	}
