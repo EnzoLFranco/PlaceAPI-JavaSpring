@@ -48,6 +48,12 @@ public class PlaceController {
         return placeService.list();
     }
 
+    @Operation(summary = "Update an existing place", description = "Updates the details of an existing place.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Place updated successfully",
+                    content = @Content(schema = @Schema(implementation = PlaceResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Place not found", content = @Content)
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Mono<PlaceResponse>> update(@PathVariable Long id,@RequestBody PlaceRequest request){
         var placeResponse = placeService.updateById(id, request).map(PlaceMapper::fromPlaceToResponse);
