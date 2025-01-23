@@ -72,6 +72,12 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.OK).body(placeResponse);
     }
 
+    @Operation(summary = "Find a place by ID", description = "Retrieves a specific place by its ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Place retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = PlaceResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Place not found", content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Mono<PlaceResponse>> findById(@PathVariable Long id){
         var placeResponse = placeService.findById(id).map(PlaceMapper::fromPlaceToResponse);
