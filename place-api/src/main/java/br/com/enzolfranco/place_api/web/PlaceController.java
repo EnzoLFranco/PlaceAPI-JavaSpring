@@ -37,6 +37,12 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(placeResponse);
     }
 
+    @Operation(summary = "List all places", description = "Returns a list of all places.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = PlaceResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping
     public Flux<Place> list(){
         return placeService.list();
