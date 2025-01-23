@@ -60,6 +60,12 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.OK).body(placeResponse);
     }
 
+    @Operation(summary = "Delete a place", description = "Deletes a place by its ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Place deleted successfully",
+                    content = @Content(schema = @Schema(implementation = PlaceResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Place not found", content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Mono<PlaceResponse>> deleteById(@PathVariable Long id){
         var placeResponse = placeService.deleteById(id).map(PlaceMapper::fromPlaceToResponse);
