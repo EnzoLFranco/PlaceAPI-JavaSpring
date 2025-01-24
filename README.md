@@ -51,7 +51,7 @@ Para construir e executar a aplicação, você precisará de:
    ```
 
 2. Configure o banco de dados MySQL:
-   - Crie um banco de dados chamado `places`
+   - Crie um banco de dados chamado `place`
    - Atualize as credenciais do banco no arquivo `application.properties` localizado em `src/main/resources/`.
 
 3. Execute a aplicação com o Maven:
